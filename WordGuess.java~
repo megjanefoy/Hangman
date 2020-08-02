@@ -1,0 +1,175 @@
+import java.util.ArrayList;
+
+/**
+ * I have received no outside help on this Programming Assignment
+ * 
+ * @author Megan Jane Thompson
+ * @version March 13, 2019
+ */
+
+/**
+ * This class has the tools to play a game of Hangman (WordGuess)
+ */
+public class WordGuess {
+  
+  /**
+   * This method takes in the word to guess and the user word
+   * and returns a word of proper length set to the values
+   * that indicate a letter has not been guessed yet *
+   * for example, if the word were "cat", this method returns"***"
+   * 
+   * @param   theWord refers to the word from the dictionary
+   * @param   userWord refers to the length of the selected word
+   * @param   i is used for loop purposes
+   * @return  returns the userWord filled in with the no guess symbol
+   */
+  public static String makeUserWord(String theWord) {
+    String userWord = " ";
+    int i;
+    
+    for (i = 0; i < theWord.length(); ++i) {
+      userWord = userWord + "*";
+    }
+    return userWord;
+  }
+  
+  
+  /**
+   * This method takes a guess and a word and returns true if the
+   * letter guess is within the selected word, returns false if not.
+   * 
+   * @param   guess refers to the letter that the user guessed
+   * @param   theWord refers to the selected ford to inspect
+   * @param   found refers to if a guess was found or not
+   * @return  returns true if the guessed letter is within the word
+   *          returns false if the guessed letter is not within the word
+   */
+  public static boolean isInWord(char guess, String theWord) {
+    int i;
+    boolean found;
+    found = false;
+    
+    for (i = 0; i < theWord.length(); ++i) {
+      if (guess == theWord.charAt(i)) {
+        found = true;
+      }
+    }
+    return found;
+  }
+  
+  
+  /**
+   * This method takes a guess, the user's progress word, and the selected word 
+   * and produces a new progress word with the corresponding guess locations.
+   * For example, if the guess were "e" and the word was "fetch", and the user's progress 
+   * words "*****", the this method would return the new String as "*e***".
+   * 
+   * @param   guess refers to the letter the user guessed
+   * @param   userWord refers to the progress word that shows where the user is
+   * @param   theWord refers to the randomly selected dictonary word.
+   * @param   i is for loop purposes
+   * @param   userWordChars is the array conversion of String userWord
+   * @param   newUserWord refers to the new user's progress
+   * @return  returns a String representing the new progress word
+   */
+  public static String updateUserWord(char guess, String userWord, String theWord) {
+    int i;
+    char[] userWordChars = userWord.toCharArray();
+    String newUserWord;
+    
+    for (i = 0; i < theWord.length(); ++i) {
+      if (guess == theWord.charAt(i)) {
+        userWordChars[i] = guess;
+      }
+    }
+    newUserWord = String.valueOf(userWordChars);
+    return newUserWord;
+  }
+
+  
+  /**
+   * This method updates the list of guesses with the current guess.
+   * 
+   * @param   guesses refers to the user's previous guesses
+   * @param   guess refers to the user's current guess
+   * @param   newGuesses converts the previous guesses to an ArrayList
+   * @param   i is for loop purposes
+   * @param   newGuessList is the String returned after guesses are checked
+   * @return  returns the updated list of user guesses
+   */
+  public static String updateGuesses(String guesses, char guess) {
+    ArrayList<Character> newGuesses = new ArrayList<Character>();
+    int i;
+    String newGuessList;
+    newGuessList = " ";
+
+    for (i = 0; i < guesses.length(); ++i) {
+      newGuesses.add(guesses.charAt(i));
+    }
+    
+    for (i = 0; i < newGuesses.size(); ++i) {
+      if (guess == newGuesses.get(i)) {
+        newGuessList = String.valueOf(newGuesses);
+      }
+      else {
+        newGuesses.add(guess);
+        newGuessList = String.valueOf(newGuesses);
+      }
+    }
+    return newGuessList;
+  }
+  
+  
+  /**
+   * This method returns a String that includes the correct user guesses
+   * along with "_" for the remianing letters to be guesses.
+   * 
+   * @param   userWord refers to the user's word so far
+   * @param   userWordChars coverts userWord to ArrayList
+   * @param   i is for loop purposes
+   * @param   newUserWord refers to the new output of userWord
+   * @return  returns the updated user's word
+   */
+  public static String displayUserWord(String userWord) {
+    ArrayList<Character> userWordChars = new ArrayList<Character>();
+    int i;
+    String newUserWord;
+    newUserWord = " ";
+    
+    for (i = 0; i < userWord.length(); ++i) {
+      userWordChars.add(userWord.charAt(i));
+    }
+    
+    for (i = 0; i < userWordChars.size(); ++i) {
+      if(userWordChars.get(i) == '*') {
+        userWordChars.set(i, new Character('_'));
+      }
+    }
+    
+    newUserWord = String.valueOf(userWordChars);
+    return newUserWord;
+  }
+  
+    /**
+   * This method returns the number of strike and lists the guesses
+   * 
+   * @param   guesses refers to 
+   * @param   strikes refers to 
+   * @return  returns 
+   */
+  public static String displayGuesses(int strikes, String guesses) {
+    ArrayList<Character> guessesChars = new ArrayList<Character>();
+    String listGuesses;
+    String display;
+    int i;
+    
+    for (i = 0; i < guesses.length(); ++i) {
+      guessesChars.add(guesses.charAt(i));
+    }
+    
+    listGuesses = String.valueOf(guessesChars);
+    
+    display = String.format("" + "Strikes: " + strikes + '\t' + "Guesses: " + listGuesses);
+    return display;
+  } 
+}
